@@ -42,6 +42,17 @@
     "url": "https://github.com/akazwz/use-hashcode"
   },
   "declaration": true,
+  "keywords": [
+    "react",
+    "hook",
+    "hash",
+    "file",
+    "big-file",
+    "md5",
+    "sha1",
+    "sha256",
+    "crypto-js"
+  ],
   "size-limit": [
     {
       "path": "dist/use-hashcode.cjs.production.min.js",

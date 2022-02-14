@@ -28,7 +28,7 @@ const App = () => {
 }
 ````
 
-## hooks
+## Hooks
 
 ### 1.useHashFileCode: 
 
