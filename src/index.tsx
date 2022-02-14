@@ -88,7 +88,7 @@ export const useHashFileCode = (file: File | null, hashAlgo?: 'md5' | 'sha1' | '
             if (!target!.result) return
             if (typeof target!.result === 'string') return
             const wordArray = arrayBufferToWordArray(target!.result)
-            // 增量更新计算结果
+            // update hash
             alog.update(wordArray)
             resolve()
           }
