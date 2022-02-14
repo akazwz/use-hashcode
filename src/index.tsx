@@ -32,9 +32,10 @@ export interface Hasher {
 export interface IUseHashFileReturn {
   isHashLoading: boolean, // is hash loading
   isHashError: boolean, // is hash error
-  sha256: string | null, // hashcode -sha256
-  sha1: string | null, // hashcode sha1
   md5: string | null, // hashcode md5
+  sha1: string | null, // hashcode sha1
+  sha256: string | null, // hashcode -sha256
+  sha512: string | null, // hashcode -sha512
   timeSpend: number | null, // time spend
 }
 
@@ -45,13 +46,14 @@ export interface IUseHashFileReturn {
  * @param chunkSizeCustom   chunk size default:10M
  * @return IUseHashFileReturn
  */
-export const useHashFileCode = (file: File | null, hashAlgo?: 'md5' | 'sha1' | 'sha256', chunkSizeCustom?: number): IUseHashFileReturn => {
+export const useFileHashCode = (file: File | null, hashAlgo?: 'md5' | 'sha1' | 'sha256' | 'sha512', chunkSizeCustom?: number): IUseHashFileReturn => {
   const startTimeRef = useRef<number | null>(null)
   const [isHashLoading, setIsHashLoading] = useState<boolean>(true)
   const [isHashError, setIsHashError] = useState<boolean>(false)
-  const [sha256, setSha256] = useState<string | null>(null)
-  const [sha1, setSha1] = useState<string | null>(null)
   const [md5, setMd5] = useState<string | null>(null)
+  const [sha1, setSha1] = useState<string | null>(null)
+  const [sha256, setSha256] = useState<string | null>(null)
+  const [sha512, setSha512] = useState<string | null>(null)
   const [timeSpend, setTimeSpend] = useState<number | null>(null)
 
   useEffect(() => {
@@ -141,6 +143,18 @@ export const useHashFileCode = (file: File | null, hashAlgo?: 'md5' | 'sha1' | '
       case 'sha256':
         hashFileSha256()
         break
+      case 'sha512':
+        hashFileInternal(file, CryptoJs.algo.SHA512.create()).then((sha512) => {
+          setSha512(sha512)
+          if (startTimeRef.current) {
+            const t = Date.now() - startTimeRef.current
+            setTimeSpend(t)
+          }
+        }).catch(() => {
+          setIsHashError(true)
+          setIsHashLoading(false)
+        })
+        break
       default:
         hashFileSha256()
     }
@@ -149,10 +163,26 @@ export const useHashFileCode = (file: File | null, hashAlgo?: 'md5' | 'sha1' | '
   return {
     isHashLoading,
     isHashError,
-    sha256,
-    sha1,
     md5,
+    sha1,
+    sha256,
+    sha512,
     timeSpend,
+  }
+}
+
+export const useStringHashCode = (msg: string, hashAlgo?: 'md5' | 'sha1' | 'sha256' | 'sha512'): string => {
+  switch (hashAlgo) {
+    case 'md5':
+      return CryptoJs.MD5(msg).toString()
+    case 'sha1':
+      return CryptoJs.SHA1(msg).toString()
+    case 'sha256':
+      return CryptoJs.SHA256(msg).toString()
+    case 'sha512':
+      return CryptoJs.SHA512(msg).toString()
+    default:
+      return CryptoJs.SHA256(msg).toString()
   }
 }
 
