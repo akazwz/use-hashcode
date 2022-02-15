@@ -2,15 +2,25 @@
 
 npm:
 
-````shell
-npm install use-hashcode
-````
+```shell
+npm i use-hashcode
+```
 
 yarn:
 
-````shell
+```shell
 yarn add use-hashcode
-````
+```
+
+## Prepare
+make sure you have crypto-js
+```shell
+npm i crypto-js
+```
+or
+```shell
+yarn add crypto-js
+```
 
 ## Summary
 
