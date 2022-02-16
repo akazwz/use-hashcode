@@ -57,7 +57,17 @@ export const useFileHashCode = (file: File | null, hashAlgo?: 'md5' | 'sha1' | '
   const [timeSpend, setTimeSpend] = useState<number | null>(null)
 
   useEffect(() => {
-    if (!file) return
+    /* file is null init all state */
+    if (!file) {
+      setIsHashLoading(true)
+      setIsHashError(false)
+      setMd5(null)
+      setSha1(null)
+      setSha256(null)
+      setSha512(null)
+      setTimeSpend(null)
+      return
+    }
     /* record start time */
     startTimeRef.current = Date.now()
 
