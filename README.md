@@ -50,6 +50,6 @@ const App = () => {
 
 #### get hash code of file(include huge file), can custom chunk size, support MD5, Sha1, Sha256, Sha512
 
-### 2.useFileHashCode:
+### 2.useStringHashCode:
 
 #### get hash code of string, support MD5, Sha1, Sha256,Sha512
